@@ -24,7 +24,7 @@ const RecipeSchema = new Schema({
         default: Date.now
     },
     likes: {
-        type: number,
+        type: Number,
         default: 0
     },
     userName: {
