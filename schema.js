@@ -9,6 +9,9 @@ type Recipe {
     likes: Int
     userName: String
 }
+type Token {
+    token: String!
+}
 type User {
     _id: ID
     username: String! @unique
@@ -23,5 +26,7 @@ type Query {
 type Mutation {
     addRecipe(name: String!, category: String!, description: String!,
     instructions: String!, userName: String): Recipe
+
+    signUpUser(userName: String!, email: String!, password: String!): Token
 }
 `;

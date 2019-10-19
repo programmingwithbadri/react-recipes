@@ -1,9 +1,11 @@
 const config = {
     production: {
-        DATABASE: process.env.MONGODB_URI
+        DATABASE: process.env.MONGODB_URI,
+        SECRET: process.env.SECRET
     },
     default: {
-        DATABASE: 'mongodb://localhost:27017/recipes'
+        DATABASE: 'mongodb://localhost:27017/recipes',
+        SECRET: 'SUPERSECRET'
     }
 }
 
