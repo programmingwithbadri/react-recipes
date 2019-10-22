@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo';
 import { SIGNUP_USER } from '../../queries';
+import Error from '../Error';
+
+const initialState = {
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+}
 
 export default class SignUp extends Component {
-    state = {
-        userName: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    }
+    state = { ...initialState }
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -18,11 +21,23 @@ export default class SignUp extends Component {
 
     }
 
+    clearState = () => {
+        this.setState({ ...initialState })
+    }
+
+    validateForm = () => {
+        const { userName, email, password, confirmPassword } = this.state;
+        const isInValid = !userName || !email || !password || password !== confirmPassword
+        return isInValid
+    }
+
     handleSubmit = (event, signUpUser) => {
         event.preventDefault();
         signUpUser().then(data => {
             console.log(data)
         })
+
+        this.clearState();
 
     }
 
@@ -40,7 +55,8 @@ export default class SignUp extends Component {
                                 <input type="email" name="email" onChange={this.handleChange} placeholder="Email Address" value={email} />
                                 <input type="password" name="password" onChange={this.handleChange} placeholder="Password" value={password} />
                                 <input type="password" name="confirmPassword" onChange={this.handleChange} placeholder="Confirm Password" value={confirmPassword} />
-                                <button type="submit" className="button-primary">Submit</button>
+                                <button type="submit" disabled={loading || this.validateForm()} className="button-primary">Submit</button>
+                                {error && <Error error={error} />}
                             </form>
                         )
                     }}

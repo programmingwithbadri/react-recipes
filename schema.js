@@ -14,7 +14,7 @@ type Token {
 }
 type User {
     _id: ID
-    username: String! @unique
+    userName: String! @unique
     password: String  
     email: String! @unique
     joinedDate: String
