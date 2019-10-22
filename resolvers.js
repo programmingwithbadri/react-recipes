@@ -1,19 +1,20 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const config = require('./config/config').get(process.env.NODE_ENV);
 
 const createToken = (user, secret, expiresIn) => {
-    const {userName, email} = user;
-    return jwt.sign({userName, email}, secret, {expiresIn})
+    const { userName, email } = user;
+    return jwt.sign({ userName, email }, secret, { expiresIn })
 }
 exports.resolvers = {
     Query: {
-        getAllRecipes: async (root, args, {Recipe}) => {
+        getAllRecipes: async (root, args, { Recipe }) => {
             return await Recipe.find();
         }
     },
     Mutation: {
         // Method gets param(root, args, context)
-        addRecipe: async (root, { name, category, description, instructions, userName}, {Recipe}) => {
+        addRecipe: async (root, { name, category, description, instructions, userName }, { Recipe }) => {
             const newRecipe = await new Recipe({
                 name,
                 category,
@@ -25,10 +26,10 @@ exports.resolvers = {
             return newRecipe;
         },
 
-        signUpUser: async(root, {userName, email, password}, {User}) => {
-            const user = await User.findOne({userName});
+        signUpUser: async (root, { userName, email, password }, { User }) => {
+            const user = await User.findOne({ userName });
 
-            if(user) {
+            if (user) {
                 throw new Error("User Already exists!");
             }
 
@@ -38,7 +39,23 @@ exports.resolvers = {
                 password
             }).save();
 
-            return {token: createToken(newUser, config.SECRET, '1hr' )};
+            return { token: createToken(newUser, config.SECRET, '1hr') };
+        },
+
+        signInUser: async (root, { userName, password }, { User }) => {
+            const user = await User.findOne({ userName });
+
+            if (!user) {
+                throw new Error("User not exists!");
+            }
+
+            const isValidPassword = await bcrypt.compare(password, user.password);
+
+            if (!isValidPassword) {
+                throw new Error("Invalid password");
+            }
+
+            return { token: createToken(user, config.SECRET, '1hr') };
         }
     }
 };
