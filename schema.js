@@ -22,6 +22,7 @@ type User {
 }
 type Query {
     getAllRecipes: [Recipe]
+    getCurrentUser: User
 }
 type Mutation {
     addRecipe(name: String!, category: String!, description: String!,
