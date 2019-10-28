@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
 import { SIGNIN_USER } from '../../queries';
 import Error from '../Error';
@@ -8,7 +9,7 @@ const initialState = {
     password: ""
 }
 
-export default class SignIn extends Component {
+class SignIn extends Component {
     state = { ...initialState }
 
     handleChange = (event) => {
@@ -35,6 +36,7 @@ export default class SignIn extends Component {
             console.log(data)
             localStorage.setItem("token", data.signInUser.token);
             this.clearState();
+            this.props.history.push('/');
         })
     }
 
@@ -60,3 +62,5 @@ export default class SignIn extends Component {
         )
     }
 }
+
+export default withRouter(SignIn);
