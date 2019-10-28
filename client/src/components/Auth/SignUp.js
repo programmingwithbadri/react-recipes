@@ -33,12 +33,11 @@ export default class SignUp extends Component {
 
     handleSubmit = (event, signUpUser) => {
         event.preventDefault();
-        signUpUser().then(data => {
+        signUpUser().then(({ data }) => {
             console.log(data)
+            localStorage.setItem("token", data.signUpUser.token);
+            this.clearState();
         })
-
-        this.clearState();
-
     }
 
     render() {
