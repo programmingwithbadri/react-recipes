@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config/config').get(process.env.NODE_ENV);
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 // Import mongoose models
 const User = require('./models/User');
@@ -36,6 +37,21 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Setup JWT auth
+app.use(async (req, res, next) => {
+    const token = req.headers['authorization'];
+
+    if (token !== "null") {
+        try {
+            const currentUser = await jwt.verify(token, config.SECRET);
+            console.log(currentUser);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    next();
+})
+
 // Create GraphiQL application
 app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql'
@@ -44,12 +60,12 @@ app.use('/graphiql', graphiqlExpress({
 // Connects Schemas with GraphQL
 app.use('/graphql', bodyParser.json(), graphqlExpress({
     schema,
-    context:{
+    context: {
         Recipe,
         User
     }
 }))
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log(`Server is listening at port ${PORT}`)
 });
