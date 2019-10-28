@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
 import { SIGNUP_USER } from '../../queries';
 import Error from '../Error';
@@ -10,7 +11,7 @@ const initialState = {
     confirmPassword: ""
 }
 
-export default class SignUp extends Component {
+class SignUp extends Component {
     state = { ...initialState }
 
     handleChange = (event) => {
@@ -37,6 +38,7 @@ export default class SignUp extends Component {
             console.log(data)
             localStorage.setItem("token", data.signUpUser.token);
             this.clearState();
+            this.props.history.push('/')
         })
     }
 
@@ -64,3 +66,5 @@ export default class SignUp extends Component {
         )
     }
 }
+
+export default withRouter(SignUp);
