@@ -14,6 +14,17 @@ query {
 }
 `;
 
+// User Queries
+export const GET_CURRENT_USER = gql`
+query {
+    getCurrentUser{
+        userName
+        joinedDate
+        email 
+    }
+}
+`;
+
 // User mutations
 export const SIGNUP_USER = gql`
 mutation($userName:String!, $email: String!, $password:String!){

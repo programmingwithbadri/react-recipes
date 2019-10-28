@@ -44,7 +44,7 @@ app.use(async (req, res, next) => {
     if (token !== "null") {
         try {
             const currentUser = await jwt.verify(token, config.SECRET);
-            req.currentUser = currentUser;
+            req.currentUser = currentUser; // passing the current user info to graphql express
         } catch (err) {
             console.log(err);
         }
@@ -63,7 +63,7 @@ app.use('/graphql', bodyParser.json(), graphqlExpress(({ currentUser }) => ({
     context: {
         Recipe,
         User,
-        currentUser
+        currentUser // graphql makes the current user avail in our resolvers
     }
 }))
 );
