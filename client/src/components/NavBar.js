@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
+import SignOut from './Auth/SignOut'
 
 const NavBar = ({ session }) => {
     console.log(session)
@@ -30,7 +31,7 @@ const NavBarAuth = ({ session }) => (
                 <NavLink to="/profile">Profile</NavLink>
             </li>
             <li>
-                <button>Sign Out</button>
+                <SignOut />
             </li>
         </ul>
         <h4>Welcome, <strong>{session.getCurrentUser.userName}</strong> </h4>
