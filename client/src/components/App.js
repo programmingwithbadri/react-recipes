@@ -7,15 +7,20 @@ const App = () => (
   <div className="App">
     <h1> Hello </h1>
     <Query query={GET_ALL_RECIPES}>
-      {({data, loading, error})=> {
-         if(loading) return <div>Loading...</div>
-         if(error) return <div>Error!</div>
+      {({ data, loading, error }) => {
+        if (loading) return <div>Loading...</div>
+        if (error) return <div>Error!</div>
 
-         console.log(data);
+        console.log(data);
 
-         return (
-           <p>Recipes</p>
-         )
+        return (
+          <ul>{data.getAllRecipes.map(recipe => (
+            <li key={recipe._id}>
+              {recipe.name}
+            </li>
+          ))}
+          </ul>
+        )
       }}
     </Query>
   </div>
