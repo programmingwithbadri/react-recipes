@@ -9,6 +9,26 @@ const NavBar = () => {
     )
 }
 
+const NavBarAuth = () => (
+    <ul>
+        <li>
+            <NavLink to="/" exact>Home</NavLink>
+        </li>
+        <li>
+            <NavLink to="/search">Search</NavLink>
+        </li>
+        <li>
+            <NavLink to="/recipe/add">Add a Recipe</NavLink>
+        </li>
+        <li>
+            <NavLink to="/profile">Profile</NavLink>
+        </li>
+        <li>
+            <button>Sign Out</button>
+        </li>
+    </ul>
+);
+
 const NavBarUnAuth = () => {
     return (
         <ul>
