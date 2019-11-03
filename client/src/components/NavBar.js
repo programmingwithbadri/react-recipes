@@ -1,10 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = ({ session }) => {
+    console.log(session)
     return (
         <nav>
-            <NavBarUnAuth />
+            {
+                session && session.getCurrentUser
+                    ? <NavBarAuth />
+                    : <NavBarUnAuth />
+            }
         </nav>
     )
 }
