@@ -23,13 +23,13 @@ class AddRecipe extends Component {
     }
 
     render() {
-        const { name, description, instructions } = this.state;
+        const { name, description, category, instructions } = this.state;
         return (
             <div className="App">
                 <h2>Add a Recipe</h2>
                 <form className="form">
                     <input type="text" name="name" onChange={this.handleChange} placeholder="Add Recipe Name" value={name} />
-                    <select name="category" onChange={this.handleChange}>
+                    <select name="category" onChange={this.handleChange} value={category}>
                         <option value="Breakfast">Breakfast</option>
                         <option value="Lunch">Lunch</option>
                         <option value="Dinner">Dinner</option>

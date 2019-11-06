@@ -12,7 +12,9 @@ exports.resolvers = {
         // args: args defined/ will be passed in the schema
         // context: which model will be affected?
         getAllRecipes: async (root, args, { Recipe }) => {
-            return await Recipe.find();
+            return await Recipe.find().sort({
+                createdDate: "desc"
+            });
         },
 
         // Since we are sending the arg as id in the schema,
