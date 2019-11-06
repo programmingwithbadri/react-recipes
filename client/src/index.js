@@ -12,6 +12,7 @@ import WithSession from './components/WithSession';
 import NavBar from './components/NavBar';
 import Search from './components/Recipe/Search';
 import AddRecipe from './components/Recipe/AddRecipe';
+import Recipe from './components/Recipe';
 import Profile from './components/Profile';
 
 const client = new ApolloClient({
@@ -48,6 +49,7 @@ const Root = ({ refetch, session }) => (
             <Route path="/signup" render={() => <SignUp refetch={refetch} />} />
             <Route path="/search" component={Search} />
             <Route path="/recipe/add" component={AddRecipe} />
+            <Route path="/recipe/:_id" component={Recipe}/>
             <Route path="/profile" component={Profile} />
             <Redirect to="/" />
         </Switch>

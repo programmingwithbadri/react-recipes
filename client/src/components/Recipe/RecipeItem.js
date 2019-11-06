@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom'
 
-export default function RecipeItem({ name, category }) {
+export default function RecipeItem({ _id, name, category }) {
     return (
         <li>
-            <h4>{name}</h4>
+            <Link to={`recipe/${_id}`}>
+                <h4>{name}</h4>
+            </Link>
             <p><strong>{category}</strong></p>
         </li>
     )
