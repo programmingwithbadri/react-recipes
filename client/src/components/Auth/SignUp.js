@@ -19,7 +19,6 @@ class SignUp extends Component {
         this.setState({
             [name]: value
         })
-
     }
 
     clearState = () => {
