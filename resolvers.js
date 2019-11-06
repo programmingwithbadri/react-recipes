@@ -8,8 +8,18 @@ const createToken = (user, secret, expiresIn) => {
 }
 exports.resolvers = {
     Query: {
+        // Method gets param(root, args, context)
+        // args: args defined/ will be passed in the schema
+        // context: which model will be affected?
         getAllRecipes: async (root, args, { Recipe }) => {
             return await Recipe.find();
+        },
+
+        // Since we are sending the arg as id in the schema,
+        // we are destructuring that in the func param,
+        // instead of passing args like other queries
+        getRecipe: async (root, { _id }, { Recipe }) => {
+            return await Recipe.findOne({ _id });
         },
 
         getCurrentUser: async (root, args, { currentUser, User }) => {
@@ -28,6 +38,8 @@ exports.resolvers = {
     },
     Mutation: {
         // Method gets param(root, args, context)
+        // args: args defined/ will be passed in the schema
+        // context: which model will be affected?
         addRecipe: async (root, { name, category, description, instructions, userName }, { Recipe }) => {
             const newRecipe = await new Recipe({
                 name,
