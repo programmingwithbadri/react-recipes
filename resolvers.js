@@ -19,7 +19,7 @@ exports.resolvers = {
         // we are destructuring that in the func param,
         // instead of passing args like other queries
         getRecipe: async (root, { _id }, { Recipe }) => {
-            return await Recipe.findOne({ _id });
+            return await Recipe.findById({ _id });
         },
 
         getCurrentUser: async (root, args, { currentUser, User }) => {

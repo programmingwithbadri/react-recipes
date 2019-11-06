@@ -11,6 +11,16 @@ query {
 }
 `;
 
+export const GET_RECIPE = gql`
+query($_id:ID!) {
+  getRecipe(_id: $_id) {
+    name,
+    description,
+    category
+  }
+}
+`;
+
 // User Queries
 export const GET_CURRENT_USER = gql`
 query {
