@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import { ADD_RECIPE } from '../../queries';
+import Error from '../Error';
 
 const initialState = {
     name: "",
@@ -18,8 +21,21 @@ class AddRecipe extends Component {
         })
     }
 
+    validateForm = () => {
+        const { name, description, instructions } = this.state;
+        const isInValid = !name || !description || !instructions;
+        return isInValid
+    }
+
     clearState = () => {
         this.setState({ ...initialState })
+    }
+
+    handleSubmit = (event, addRecipe) => {
+        event.preventDefault();
+        addRecipe().then(async ({ data }) => {
+            console.log(data);
+        })
     }
 
     componentDidMount() {
@@ -29,23 +45,31 @@ class AddRecipe extends Component {
     }
 
     render() {
-        const { name, description, category, instructions } = this.state;
+        const { name, category, description, instructions, userName } = this.state;
         return (
-            <div className="App">
-                <h2>Add a Recipe</h2>
-                <form className="form">
-                    <input type="text" name="name" onChange={this.handleChange} placeholder="Add Recipe Name" value={name} />
-                    <select name="category" onChange={this.handleChange} value={category}>
-                        <option value="Breakfast">Breakfast</option>
-                        <option value="Lunch">Lunch</option>
-                        <option value="Dinner">Dinner</option>
-                        <option value="Snack">Snack</option>
-                    </select>
-                    <input type="text" name="description" onChange={this.handleChange} placeholder="Add Description" value={description} />
-                    <textarea name="instructions" onChange={this.handleChange} placeholder=" Add Instructions" value={instructions}></textarea>
-                    <button type="submit"></button>
-                </form>
-            </div>
+            <Mutation mutation={ADD_RECIPE}
+                variables={{ name, category, description, instructions, userName }}>
+                {(addRecipe, { data, loading, error }) => {
+                    return (
+                        <div className="App">
+                            <h2>Add a Recipe</h2>
+                            <form className="form" onSubmit={event => this.handleSubmit(event, addRecipe)}>
+                                <input type="text" name="name" onChange={this.handleChange} placeholder="Add Recipe Name" value={name} />
+                                <select name="category" onChange={this.handleChange} value={category}>
+                                    <option value="Breakfast">Breakfast</option>
+                                    <option value="Lunch">Lunch</option>
+                                    <option value="Dinner">Dinner</option>
+                                    <option value="Snack">Snack</option>
+                                </select>
+                                <input type="text" name="description" onChange={this.handleChange} placeholder="Add Description" value={description} />
+                                <textarea name="instructions" onChange={this.handleChange} placeholder=" Add Instructions" value={instructions}></textarea>
+                                <button type="submit" disabled={loading || this.validateForm()} className="button-primary">Submit</button>
+                                {error && <Error error={error} />}
+                            </form>
+                        </div>
+                    );
+                }}
+            </Mutation>
         )
     }
 }

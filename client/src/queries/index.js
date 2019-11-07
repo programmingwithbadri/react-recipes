@@ -26,6 +26,24 @@ query($_id:ID!) {
 }
 `;
 
+// Recipe Mutations
+export const ADD_RECIPE = gql`
+mutation($name:String!, $category: String!, $description:String!,
+  $instructions: String!, $userName: String){
+  addRecipe(name: $name, category: $category, description: $description,
+    instructions: $instructions, userName: $userName) {
+      _id,
+      name,
+      description,
+      category,
+      instructions,
+      createdDate,
+      likes,
+      userName
+    }
+  }
+`;
+
 // User Queries
 export const GET_CURRENT_USER = gql`
 query {
