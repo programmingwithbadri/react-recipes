@@ -22,6 +22,12 @@ class AddRecipe extends Component {
         this.setState({ ...initialState })
     }
 
+    componentDidMount() {
+        this.setState({
+            userName: this.props.session.getCurrentUser.userName
+        });
+    }
+
     render() {
         const { name, description, category, instructions } = this.state;
         return (
