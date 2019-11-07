@@ -21,7 +21,7 @@ const Recipe = (props) => {
                         <p>Description: {data.getRecipe.description}</p>
                         <p>Instructions: {data.getRecipe.instructions}</p>
                         <p>Likes: {data.getRecipe.likes}</p>
-                        <p>Created By: {data.getRecipe.username}</p>
+                        <p>Created By: {data.getRecipe.userName}</p>
                         <button>Like</button>
                     </div>
                 );

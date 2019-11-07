@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
 import { ADD_RECIPE } from '../../queries';
 import Error from '../Error';
@@ -35,6 +36,8 @@ class AddRecipe extends Component {
         event.preventDefault();
         addRecipe().then(async ({ data }) => {
             console.log(data);
+            this.clearState();
+            this.props.history.push('/')
         })
     }
 
@@ -74,4 +77,4 @@ class AddRecipe extends Component {
     }
 }
 
-export default AddRecipe
+export default withRouter(AddRecipe);
