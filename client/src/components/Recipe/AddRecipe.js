@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
-import { ADD_RECIPE } from '../../queries';
+import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
 import Error from '../Error';
 
 const initialState = {
@@ -41,6 +41,28 @@ class AddRecipe extends Component {
         })
     }
 
+   // updating the cache to add the currently added recipe to the getAllRecipes query
+   // Destructuring the single object cache to cache and addRecipe from data
+   // Note: This is being performed because sometimes it is possible
+   // that the recipe would be added to the DB but while redirecting to the home page
+   // the newly added recipe wont be showed
+   // because we are doing to calls, addRecipe and GetAllRecipes which will take time
+    updateCache = (cache, { data: { addRecipe } }) => {
+        // Get the current recipes from the cache
+        const { getAllRecipes } = cache.readQuery({
+            query: GET_ALL_RECIPES
+        });
+
+        // Manually adding the newly added recipe to the cache
+        cache.writeQuery({
+            query: GET_ALL_RECIPES,
+            data: {
+                getAllRecipes: [addRecipe, ...getAllRecipes]
+            }
+        })
+
+    }
+
     componentDidMount() {
         this.setState({
             userName: this.props.session.getCurrentUser.userName
@@ -51,7 +73,8 @@ class AddRecipe extends Component {
         const { name, category, description, instructions, userName } = this.state;
         return (
             <Mutation mutation={ADD_RECIPE}
-                variables={{ name, category, description, instructions, userName }}>
+                variables={{ name, category, description, instructions, userName }}
+                update={this.updateCache}>
                 {(addRecipe, { data, loading, error }) => {
                     return (
                         <div className="App">
