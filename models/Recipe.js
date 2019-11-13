@@ -30,6 +30,11 @@ const RecipeSchema = new Schema({
     userName: {
         type: String
     }
-})
+});
+
+// adding index to say which fields we are searching on
+RecipeSchema.index({
+    '$**': 'text'
+});
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

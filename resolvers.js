@@ -24,6 +24,33 @@ exports.resolvers = {
             return await Recipe.findById({ _id });
         },
 
+        searchRecipes: async (root, { searchTerm }, { Recipe }) => {
+            if (searchTerm) {
+                const searchResults = await Recipe.find(
+                    {
+                        // find the search term based on the index set
+                        $text: { $search: searchTerm }
+                    },
+                    {
+                        // adds the meta field in the recipe
+                        // to identify which field is searched most
+                        score: { $meta: "textScore" }
+                    })
+                    .sort({
+                        // so that we could sort by meta field
+                        score: { $meta: 'textScore' }
+                    });
+
+                return searchResults;
+            } else {
+                // if nothing is entered in search box return all recipes
+                return await Recipe.find().sort({
+                    likes: 'desc',
+                    createdDate: 'desc'
+                });
+            }
+        },
+
         getCurrentUser: async (root, args, { currentUser, User }) => {
             if (!currentUser) {
                 return null;
