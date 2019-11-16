@@ -61,6 +61,10 @@ query {
         userName
         joinedDate
         email 
+        favourites {
+          _id
+          name
+        }
     }
 }
 `;

@@ -1,9 +1,10 @@
 import React from 'react'
+import { UserInfo } from './UserInfo'
 
-const Profile = () => {
+const Profile = ({ session }) => {
     return (
         <div>
-            Profile
+            <UserInfo session={session} />
         </div>
     )
 }
