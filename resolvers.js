@@ -63,6 +63,12 @@ exports.resolvers = {
                 });
 
             return user;
+        },
+
+        getUserRecipes: async (root, { userName }, { Recipe }) => {
+            return await Recipe.find({ userName }).sort({
+                createdDate: 'desc'
+            });
         }
     },
     Mutation: {

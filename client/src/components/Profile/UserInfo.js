@@ -9,7 +9,6 @@ export const UserInfo = ({ session }) => {
 
         return `${localDate} at ${localTime}`
     }
-    console.log(session)
     return (
         <div className="App">
             <h3>User Info</h3>

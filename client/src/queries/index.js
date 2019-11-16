@@ -69,6 +69,16 @@ query {
 }
 `;
 
+export const GET_USER_RECIPES = gql`
+query($userName: String!)  {
+    getUserRecipes(userName: $userName){
+      _id
+      name
+      likes
+    }
+}
+`;
+
 // User mutations
 export const SIGNUP_USER = gql`
 mutation($userName:String!, $email: String!, $password:String!){
