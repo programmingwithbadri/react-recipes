@@ -30,6 +30,8 @@ type Query {
 type Mutation {
     addRecipe(name: String!, category: String!, description: String!,
     instructions: String!, userName: String): Recipe
+    
+    deleteUserRecipe(_id: ID!) : Recipe
 
     signUpUser(userName: String!, email: String!, password: String!): Token
 
