@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
 import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
 import Error from '../Error';
+import { WithAuth } from '../WithAuth';
 
 const initialState = {
     name: "",
@@ -14,7 +15,6 @@ const initialState = {
 
 class AddRecipe extends Component {
     state = { ...initialState }
-
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({
@@ -41,12 +41,12 @@ class AddRecipe extends Component {
         })
     }
 
-   // updating the cache to add the currently added recipe to the getAllRecipes query
-   // Destructuring the single object cache to cache and addRecipe from data
-   // Note: This is being performed because sometimes it is possible
-   // that the recipe would be added to the DB but while redirecting to the home page
-   // the newly added recipe wont be showed
-   // because we are doing to calls, addRecipe and GetAllRecipes which will take time
+    // updating the cache to add the currently added recipe to the getAllRecipes query
+    // Destructuring the single object cache to cache and addRecipe from data
+    // Note: This is being performed because sometimes it is possible
+    // that the recipe would be added to the DB but while redirecting to the home page
+    // the newly added recipe wont be showed
+    // because we are doing to calls, addRecipe and GetAllRecipes which will take time
     updateCache = (cache, { data: { addRecipe } }) => {
         // Get the current recipes from the cache
         const { getAllRecipes } = cache.readQuery({
@@ -100,4 +100,4 @@ class AddRecipe extends Component {
     }
 }
 
-export default withRouter(AddRecipe);
+export default WithAuth(session => session && session.getCurrentUser)(withRouter(AddRecipe));
