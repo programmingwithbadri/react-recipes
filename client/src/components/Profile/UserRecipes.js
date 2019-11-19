@@ -30,13 +30,37 @@ export const UserRecipes = ({ userName }) => {
                                         <p>{recipe.name}</p>
                                     </Link>
                                     <p style={{ marginBottom: '0' }}>Likes: {recipe.likes}</p>
-                                    <Mutation mutation={DELETE_USER_RECIPE} variables={{ _id: recipe._id }}>
-                                        {deleteUserRecipe => {
+                                    <Mutation
+                                        mutation={DELETE_USER_RECIPE}
+                                        variables={{ _id: recipe._id }}
+                                        update={(cache, { data: { deleteUserRecipe } }) => { // destructuring deleteUserRecipe
+                                            const { getUserRecipes } = cache.readQuery({
+                                                query: GET_USER_RECIPES,
+                                                variables: { userName }
+                                            }); // get all user recipes from the cache
+
+                                            // update the cache to remove the deleted recipe 
+                                            // so that we dont need to reload the page
+                                            // to not see the deleted recipe
+                                            cache.writeQuery({
+                                                query: GET_USER_RECIPES,
+                                                variables: { userName },
+                                                data: {
+                                                    getUserRecipes: getUserRecipes.filter(
+                                                        recipe => recipe._id !== deleteUserRecipe._id
+                                                    )
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        {(deleteUserRecipe, attrs = {}) => { // attrs contains the additional functions to find if the operation is loading
                                             return (
                                                 <p
                                                     className="delete-button"
                                                     onClick={() => deleteRecipe(deleteUserRecipe)}
-                                                >X</p>
+                                                >
+                                                    {attrs.loading ? "deleting..." : "X"}
+                                                </p>
                                             )
                                         }}
                                     </Mutation>
