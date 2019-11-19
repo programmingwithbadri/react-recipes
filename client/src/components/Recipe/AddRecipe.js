@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
-import { ADD_RECIPE, GET_ALL_RECIPES } from '../../queries';
+import { ADD_RECIPE, GET_ALL_RECIPES, GET_CURRENT_USER, GET_USER_RECIPES } from '../../queries';
 import Error from '../Error';
 import { WithAuth } from '../WithAuth';
 
@@ -74,6 +74,11 @@ class AddRecipe extends Component {
         return (
             <Mutation mutation={ADD_RECIPE}
                 variables={{ name, category, description, instructions, userName }}
+                // the below queries will be run so that
+                // it will be update in profile page
+                refetchQueries={() => [
+                    { query: GET_USER_RECIPES, variables: { userName } }
+                ]}
                 update={this.updateCache}>
                 {(addRecipe, { data, loading, error }) => {
                     return (
