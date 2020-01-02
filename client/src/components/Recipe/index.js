@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo'
 import { GET_RECIPE } from '../../queries';
+import LikeRecipe from './LikeRecipe';
 
 const Recipe = (props) => {
     // Destructuring the props to get param
@@ -22,7 +23,7 @@ const Recipe = (props) => {
                         <p>Instructions: {data.getRecipe.instructions}</p>
                         <p>Likes: {data.getRecipe.likes}</p>
                         <p>Created By: {data.getRecipe.userName}</p>
-                        <button>Like</button>
+                        <LikeRecipe />
                     </div>
                 );
             }}
