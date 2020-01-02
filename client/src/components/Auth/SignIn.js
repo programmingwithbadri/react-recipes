@@ -33,7 +33,6 @@ class SignIn extends Component {
     handleSubmit = (event, signInUser) => {
         event.preventDefault();
         signInUser().then(async ({ data }) => {
-            console.log(data)
             localStorage.setItem("token", data.signInUser.token);
             await this.props.refetch(); // This will execute the getCurrentUser after signin
             this.clearState();

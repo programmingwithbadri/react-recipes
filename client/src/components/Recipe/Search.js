@@ -30,7 +30,6 @@ class Search extends React.Component {
                                     query: SEARCH_RECIPES,
                                     variables: { searchTerm: event.target.value }
                                 });
-                                console.log(data)
                                 this.handleChange(data);
                             }}
                         />
