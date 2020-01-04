@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import SignOut from './Auth/SignOut'
 
 const NavBar = ({ session }) => {
-    console.log(session)
     return (
         <nav>
             {
