@@ -35,6 +35,8 @@ type Mutation {
 
     likeRecipe(_id: ID!, userName: String!): Recipe
 
+    unlikeRecipe(_id: ID!, userName: String!): Recipe
+
     signUpUser(userName: String!, email: String!, password: String!): Token
 
     signInUser(userName: String!, password: String!): Token
