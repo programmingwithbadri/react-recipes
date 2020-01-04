@@ -14,9 +14,10 @@ import Search from './components/Recipe/Search';
 import AddRecipe from './components/Recipe/AddRecipe';
 import Recipe from './components/Recipe';
 import Profile from './components/Profile';
+import config from './config'
 
 const client = new ApolloClient({
-    uri: 'http://localhost:4444/graphql',
+    uri: config.get(process.env.NODE_ENV).GRAPHQLAPI,
     fetchOptions: {
         credentials: 'include'
     },

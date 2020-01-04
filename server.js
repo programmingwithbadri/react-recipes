@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
 
-const PORT = process.env.PORT || 4444;
+const PORT = config.PORT;
 
 // Connects to Mongo DB
 mongoose.connect(config.DATABASE);
@@ -52,11 +52,6 @@ app.use(async (req, res, next) => {
     next();
 })
 
-// Create GraphiQL application
-app.use('/graphiql', graphiqlExpress({
-    endpointURL: '/graphql'
-}))
-
 // Connects Schemas with GraphQL
 app.use('/graphql', bodyParser.json(), graphqlExpress(({ currentUser }) => ({
     schema,
@@ -67,6 +62,14 @@ app.use('/graphql', bodyParser.json(), graphqlExpress(({ currentUser }) => ({
     }
 }))
 );
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 app.listen(PORT, () => {
     console.log(`Server is listening at port ${PORT}`)
