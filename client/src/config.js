@@ -1,6 +1,6 @@
 const config = {
     production: {
-        GRAPHQLAPI: 'http://reactrecipegraphql.herokuapp.com/graphql'
+        GRAPHQLAPI: process.env.GRAPHQLAPI
     },
     default: {
         GRAPHQLAPI: 'http://localhost:4444/graphql'
