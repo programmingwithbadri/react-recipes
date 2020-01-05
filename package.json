@@ -4,7 +4,8 @@
   "description": "A starter for React-Apollo-GraphQL projects",
   "main": "server.js",
   "engines": {
-    "node":"v12.13.1"
+    "node":"12.13.1",
+    "npm":"6.13.1"
   },
   "scripts": {
     "start": "node server.js",
