@@ -31,12 +31,7 @@ const schema = makeExecutableSchema({
 // Initializes server
 const app = express();
 
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials: true
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Setup JWT auth
 app.use(async (req, res, next) => {
