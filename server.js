@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const config = require('./config/config').get(process.env.NODE_ENV);
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 // Import mongoose models
 const User = require('./models/User');
@@ -54,7 +55,7 @@ app.use(async (req, res, next) => {
 
 // Connects Schemas with GraphQL
 app.use('/graphql', bodyParser.json(), graphqlExpress(({ currentUser }) => ({
-    schema,
+    schema, 
     context: {
         Recipe,
         User,
