@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config/config').get(process.env.NODE_ENV);
-const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
@@ -30,8 +29,6 @@ const schema = makeExecutableSchema({
 
 // Initializes server
 const app = express();
-
-app.use(cors());
 
 // Setup JWT auth
 app.use(async (req, res, next) => {
