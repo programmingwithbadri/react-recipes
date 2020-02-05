@@ -33,9 +33,9 @@ query($searchTerm:String) {
 
 // Recipe Mutations
 export const ADD_RECIPE = gql`
-mutation($name:String!, $category: String!, $description:String!,
+mutation($name:String!, $imageUrl: String!. $category: String!, $description:String!,
   $instructions: String!, $userName: String){
-  addRecipe(name: $name, category: $category, description: $description,
+  addRecipe(name: $name, imageUrl: $imageUrl, category: $category, description: $description,
     instructions: $instructions, userName: $userName) {
       ...CompleteRecipe
     }

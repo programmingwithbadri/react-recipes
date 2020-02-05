@@ -75,9 +75,10 @@ exports.resolvers = {
         // Method gets param(root, args, context)
         // args: args defined/ will be passed in the schema
         // context: which model will be affected?
-        addRecipe: async (root, { name, category, description, instructions, userName }, { Recipe }) => {
+        addRecipe: async (root, { name, imageUrl, category, description, instructions, userName }, { Recipe }) => {
             const newRecipe = await new Recipe({
                 name,
+                imageUrl,
                 category,
                 description,
                 instructions,

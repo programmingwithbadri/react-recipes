@@ -2,6 +2,7 @@ exports.typeDefs = `
 type Recipe {
     _id: ID
     name: String!
+    imageUrl: String!
     category: String!
     description: String!
     instructions: String!
@@ -28,7 +29,7 @@ type Query {
     searchRecipes(searchTerm: String): [Recipe]
 }
 type Mutation {
-    addRecipe(name: String!, category: String!, description: String!,
+    addRecipe(name: String!, imageUrl: String!, category: String!, description: String!,
     instructions: String!, userName: String): Recipe
     
     deleteUserRecipe(_id: ID!) : Recipe

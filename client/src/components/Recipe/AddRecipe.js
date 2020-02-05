@@ -7,6 +7,7 @@ import { WithAuth } from '../WithAuth';
 
 const initialState = {
     name: "",
+    imageUrl: "",
     description: "",
     instructions: "",
     category: "Breakfast",
@@ -23,8 +24,8 @@ class AddRecipe extends Component {
     }
 
     validateForm = () => {
-        const { name, description, instructions } = this.state;
-        const isInValid = !name || !description || !instructions;
+        const { name, imageUrl, description, instructions } = this.state;
+        const isInValid = !name || !description || !instructions || !imageUrl;
         return isInValid
     }
 
@@ -69,10 +70,10 @@ class AddRecipe extends Component {
     }
 
     render() {
-        const { name, category, description, instructions, userName } = this.state;
+        const { name, imageUrl, category, description, instructions, userName } = this.state;
         return (
             <Mutation mutation={ADD_RECIPE}
-                variables={{ name, category, description, instructions, userName }}
+                variables={{ name, imageUrl, category, description, instructions, userName }}
                 // the below queries will be run so that
                 // it will be update in profile page
                 refetchQueries={() => [
@@ -85,6 +86,7 @@ class AddRecipe extends Component {
                             <h2>Add a Recipe</h2>
                             <form className="form" onSubmit={event => this.handleSubmit(event, addRecipe)}>
                                 <input type="text" name="name" onChange={this.handleChange} placeholder="Add Recipe Name" value={name} />
+                                <input type="text" name="imageUrl" onChange={this.handleChange} placeholder="Add Image" value={imageUrl} />
                                 <select name="category" onChange={this.handleChange} value={category}>
                                     <option value="Breakfast">Breakfast</option>
                                     <option value="Lunch">Lunch</option>
