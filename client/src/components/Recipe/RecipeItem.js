@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-export default function RecipeItem({ _id, name, category }) {
+export default function RecipeItem({ _id, imageUrl, name, category }) {
+    
     return (
-        <li>
-            <Link to={`recipe/${_id}`}>
-                <h4>{name}</h4>
-            </Link>
-            <p><strong>{category}</strong></p>
+        <li
+            style={{ background: `url(${imageUrl}) center center / cover no-repeat` }}
+            className="card"
+        >
+            <span className={category}>{category}</span>
+            <div className="card-text">
+                <Link to={`recipe/${_id}`}>
+                    <h4>{name}</h4>
+                </Link>
+            </div>
+
         </li>
     )
 }
