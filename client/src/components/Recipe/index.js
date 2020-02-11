@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { Query } from 'react-apollo'
 import { GET_RECIPE } from '../../queries';
 import LikeRecipe from './LikeRecipe';
+import { Spinner } from '../Spinner';
 
 const Recipe = (props) => {
     // Destructuring the props to get param
@@ -11,7 +12,7 @@ const Recipe = (props) => {
     return (
         <Query query={GET_RECIPE} variables={{ _id }}>
             {({ data, loading, error }) => {
-                if (loading) return <div>Loading...</div>;
+                if (loading) return <Spinner />
                 if (error) return <div>Error!</div>;
                 return (
                     <div className="App">
