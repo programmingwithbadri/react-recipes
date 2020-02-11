@@ -1,10 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+import posed from 'react-pose';
+
+const RecipeItemList = posed.li({
+    shown: {
+        opacity: 1
+    },
+    hidden: {
+        opacity: 0
+    }
+})
 
 export default function RecipeItem({ _id, imageUrl, name, category }) {
-    
+
     return (
-        <li
+        <RecipeItemList
             style={{ background: `url(${imageUrl}) center center / cover no-repeat` }}
             className="card"
         >
@@ -14,7 +25,6 @@ export default function RecipeItem({ _id, imageUrl, name, category }) {
                     <h4>{name}</h4>
                 </Link>
             </div>
-
-        </li>
+        </RecipeItemList>
     )
 }
