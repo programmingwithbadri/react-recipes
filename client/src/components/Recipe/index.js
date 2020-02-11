@@ -42,8 +42,10 @@ const Recipe = (props) => {
                             <h3 className="recipe-instructions__title">
                                 Instructions:
                             </h3>
-                            <div className="recipe-instructions">
-                                {data.getRecipe.instructions}
+                            <div className="recipe-instructions"
+                                dangerouslySetInnerHTML={{
+                                    __html: data.getRecipe.instructions // Inserts HTMl tag here
+                                }}>
                             </div>
                             <LikeRecipe _id={_id} />
                         </div>

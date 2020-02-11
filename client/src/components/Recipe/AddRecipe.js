@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CKEditor from 'react-ckeditor-component';
 import { withRouter } from 'react-router-dom'
 import { Mutation } from 'react-apollo';
 import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from '../../queries';
@@ -16,10 +17,18 @@ const initialState = {
 
 class AddRecipe extends Component {
     state = { ...initialState }
+
     handleChange = (event) => {
         const { name, value } = event.target;
         this.setState({
             [name]: value
+        })
+    }
+
+    handleInstructionsChange = (event) => {
+        const newContent = event.editor.getData()
+        this.setState({
+            instructions: newContent
         })
     }
 
@@ -36,6 +45,7 @@ class AddRecipe extends Component {
     handleSubmit = (event, addRecipe) => {
         event.preventDefault();
         addRecipe().then(async ({ data }) => {
+            console.log(data)
             this.clearState();
             this.props.history.push('/')
         })
@@ -94,7 +104,13 @@ class AddRecipe extends Component {
                                     <option value="Snack">Snack</option>
                                 </select>
                                 <input type="text" name="description" onChange={this.handleChange} placeholder="Add Description" value={description} />
-                                <textarea name="instructions" onChange={this.handleChange} placeholder=" Add Instructions" value={instructions}></textarea>
+                                <label htmlFor="instructions"> Add Instructions </label>
+                                <CKEditor
+                                    name="instructions"
+                                    content={instructions}
+                                    events={{
+                                        change: this.handleInstructionsChange
+                                    }} />
                                 <button type="submit" disabled={loading || this.validateForm()} className="button-primary">Submit</button>
                                 {error && <Error error={error} />}
                             </form>
