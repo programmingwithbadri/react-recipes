@@ -64,8 +64,6 @@ export class UserRecipes extends React.Component {
                                         {(deleteUserRecipe, attrs = {}) => { // attrs contains the additional functions to find if the operation is loading
                                             return (
                                                 <div>
-                                                    <button
-                                                        className="button-primary">Update</button>
                                                     <p
                                                         className="delete-button"
                                                         onClick={() => this.deleteRecipe(deleteUserRecipe)}
